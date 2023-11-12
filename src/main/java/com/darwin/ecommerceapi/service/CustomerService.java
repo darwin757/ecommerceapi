@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,10 +26,9 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-    public CustomerDTO findCustomerById(Long id) {
+    public Optional<CustomerDTO> findCustomerById(Long id) {
         return customerRepository.findById(id)
-                .map(customerMapper::customerToCustomerDTO)
-                .orElse(null);
+                .map(customerMapper::customerToCustomerDTO);
     }
 
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
