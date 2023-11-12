@@ -1,4 +1,4 @@
-package com.darwin.ecommerceapi.dto.mapper;
+package com.darwin.ecommerceapi.mapper;
 
 import com.darwin.ecommerceapi.dto.InventoryDTO;
 import com.darwin.ecommerceapi.model.Inventory;

@@ -1,7 +1,7 @@
 package com.darwin.ecommerceapi.service;
 
 import com.darwin.ecommerceapi.dto.InventoryDTO;
-import com.darwin.ecommerceapi.dto.mapper.InventoryMapper;
+import com.darwin.ecommerceapi.mapper.InventoryMapper;
 import com.darwin.ecommerceapi.model.Inventory;
 import com.darwin.ecommerceapi.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;

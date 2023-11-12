@@ -1,7 +1,7 @@
 package com.darwin.ecommerceapi.service;
 
 import com.darwin.ecommerceapi.dto.CustomerDTO;
-import com.darwin.ecommerceapi.dto.mapper.CustomerMapper;
+import com.darwin.ecommerceapi.mapper.CustomerMapper;
 import com.darwin.ecommerceapi.model.Customer;
 import com.darwin.ecommerceapi.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
