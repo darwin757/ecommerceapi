@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,11 +26,11 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductDTO findProductById(Long id) {
+    public Optional<ProductDTO> findProductById(Long id) {
         return productRepository.findById(id)
-                .map(productMapper::productToProductDTO)
-                .orElse(null);
+                .map(productMapper::productToProductDTO);
     }
+
 
     public ProductDTO saveProduct(ProductDTO productDTO) {
         Product product = productMapper.productDTOToProduct(productDTO);
