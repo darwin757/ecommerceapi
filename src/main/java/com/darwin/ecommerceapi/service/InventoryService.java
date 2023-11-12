@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,10 +26,9 @@ public class InventoryService {
                 .collect(Collectors.toList());
     }
 
-    public InventoryDTO findInventoryById(Long id) {
+    public Optional<InventoryDTO> findInventoryById(Long id) {
         return inventoryRepository.findById(id)
-                .map(inventoryMapper::inventoryToInventoryDTO)
-                .orElse(null);
+                .map(inventoryMapper::inventoryToInventoryDTO);
     }
 
     public InventoryDTO saveInventory(InventoryDTO inventoryDTO) {
