@@ -1,12 +1,14 @@
 package com.darwin.ecommerceapi.service;
 
+import com.darwin.ecommerceapi.dto.OrderDTO;
+import com.darwin.ecommerceapi.dto.mapper.OrderMapper;
 import com.darwin.ecommerceapi.model.Order;
 import com.darwin.ecommerceapi.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -14,20 +16,29 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<Order> findAllOrders() {
-        return orderRepository.findAll();
+    @Autowired
+    private OrderMapper orderMapper;
+
+    public List<OrderDTO> findAllOrders() {
+        return orderRepository.findAll().stream()
+                .map(orderMapper::orderToOrderDTO)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Order> findOrderById(Long id) {
-        return orderRepository.findById(id);
+    public OrderDTO findOrderById(Long id) {
+        return orderRepository.findById(id)
+                .map(orderMapper::orderToOrderDTO)
+                .orElse(null);
     }
 
-    public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+    public OrderDTO saveOrder(OrderDTO orderDTO) {
+        Order order = orderMapper.orderDTOToOrder(orderDTO);
+        Order savedOrder = orderRepository.save(order);
+        return orderMapper.orderToOrderDTO(savedOrder);
     }
 
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }
-
 }
+

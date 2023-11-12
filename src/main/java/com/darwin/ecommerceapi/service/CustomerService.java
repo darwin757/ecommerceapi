@@ -1,12 +1,14 @@
 package com.darwin.ecommerceapi.service;
 
+import com.darwin.ecommerceapi.dto.CustomerDTO;
+import com.darwin.ecommerceapi.dto.mapper.CustomerMapper;
 import com.darwin.ecommerceapi.model.Customer;
 import com.darwin.ecommerceapi.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -14,21 +16,30 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<Customer> findAllCustomers() {
-        return customerRepository.findAll();
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    public List<CustomerDTO> findAllCustomers() {
+        return customerRepository.findAll().stream()
+                .map(customerMapper::customerToCustomerDTO)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Customer> findCustomerById(Long id) {
-        return customerRepository.findById(id);
+    public CustomerDTO findCustomerById(Long id) {
+        return customerRepository.findById(id)
+                .map(customerMapper::customerToCustomerDTO)
+                .orElse(null);
     }
 
-    public Customer saveCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+        Customer savedCustomer = customerRepository.save(customer);
+        return customerMapper.customerToCustomerDTO(savedCustomer);
     }
 
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
-
 }
+
 
